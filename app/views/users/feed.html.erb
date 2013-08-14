@@ -1,0 +1,22 @@
+<% @posts = current_user.friend_posts %>
+
+<% @posts.uniq.each do |post| %>
+	<h1><%= post.title %></h1>
+	<h3>Written by: <%= post.user.username %></h3>
+	<h2><%= post.body %></h2>
+	<% unless post.links.empty? %>
+		<h3>Links</h3>
+		<ul>
+		<% post.links.each do |link| %>
+			<li><%= link_to link.name, link.url %></li>
+		<% end %>
+		</ul>
+		<h3>Shares</h3>
+		<ul>
+		<% post.friend_circles.each do |fc| %>
+			<li><%= fc.name %></li>
+		<% end %>
+		</ul>
+	<% end %>
+	<hr>
+<% end %>

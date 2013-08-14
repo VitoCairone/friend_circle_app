@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FriendCircleApp</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% if logged_in? %>
+<table><tr>
+<td>
+Logged in as: <%= current_user.username %>
+</td><td align="right">
+<form action="<%= session_url %>" method="post">
+	<input type="hidden" name="_method" value="delete">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<input type="submit" value="Sign Out">
+</form>
+</td>
+</tr>
+</table>
+<% else %>
+Not logged in.
+<% end #end if logged_in? %>
+
+
+<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<h1>Friend Circle</h1>
+
+
+<h2>Owner: <%= @fc.owner.username %></h2>
+
+<h2>Members</h2>
+<ul>
+	<% @fc.members.each do |friend| %>
+	  <li><%=friend.username%></li>
+	<% end %>
+</ul>
