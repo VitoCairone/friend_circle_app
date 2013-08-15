@@ -1,31 +1,41 @@
+<%
+if @incepted
+  prefix = "user[posts_attributes]"
+  shares_prefix = "user[posts_attributes][shares]"
+else
+  prefix = "post"
+	shares_prefix = "shares"
+end
+%>
+
 <label for="post_title">Title</label>
 <input type="text"
-	name="post[title]"
+	name="<%=prefix%>[title]"
 	id="post_title"
 	value="<%=@post.title%>"
 >
 <br>
 <label for="post_body">Body</label>
-<textarea name="post[body]" id="post_body"><%=@post.body%></textarea>
+<textarea name="<%=prefix%>[body]" id="post_body"><%=@post.body%></textarea>
 <h2>Links</h2>
 <% 3.times do |i| %>
   <% @link = @post.links[i] ? @post.links[i] : Link.new() %>
 	<label for="link_<%=i%>_name">Name</label>
 	<input type="text"
-		name="post[links_attributes][<%=i%>][name]"
+		name="<%=prefix%>[links_attributes][<%=i%>][name]"
 		id="link_<%=i%>_name"
 		value="<%=@link.name%>"
 	>
 	<br>
 	<label for="link_<%=i%>_url">URL</label>
 	<input type="text"
-		name="post[links_attributes][<%=i%>][url]"
+		name="<%=prefix%>[links_attributes][<%=i%>][url]"
 		id="link_<%=i%>_url"
 		value="<%=@link.url%>"
 	>
 	<% unless @link.id.nil? %>
 	  <input type="hidden"
-			name="post[links_attributes][<%=i%>][id]"
+			name="<%=prefix%>[links_attributes][<%=i%>][id]"
 			value="<%=@link.id%>"
 		>
 	<% end %>
@@ -37,7 +47,7 @@
 <% @friend_circles.each do |fc| %>
 	<input
 		type="checkbox"
-		name="shares[]"
+		name="<%=shares_prefix%>[]"
 		id="<%="share#{fc.id}"%>"
 		value="<%=fc.id%>"
 		<%= checked="checked" if @post.friend_circles.include?(fc) %>
@@ -45,6 +55,6 @@
 	<label for="<%="share#{fc.id}"%>"><%=fc.name%></label>
 	<br>
 <% end %>
-<input type="hidden" name="shares[]" value="">
+<input type="hidden" name="<%=shares_prefix%>[]" value="">
 
 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">

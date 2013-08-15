@@ -1,8 +1,11 @@
+require 'debugger'
+
 class UsersController < ApplicationController
 
   before_filter :enforce_logged_in, :only => :feed
 
   def create
+    debugger
     @user = User.new(params[:user])
     if @user.save
       login!(@user)
@@ -17,6 +20,9 @@ class UsersController < ApplicationController
   end
 
   def new
+    @incepted = true
+    @post = Post.new
+    @friend_circles = FriendCircle.all
     render :new # not actually required
   end
 

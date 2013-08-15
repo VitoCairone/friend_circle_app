@@ -1,13 +1,16 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
-  attr_accessible :session_token, :username, :password
+  attr_accessible :session_token, :username, :password, :posts_attributes
 
   has_many :memberships
   has_many :friend_circles, :through => :memberships
   has_many :owned_friend_circles,
            :foreign_key => :owner_id
   has_many :friend_posts, :through => :friend_circles, :source => :posts
+  has_many :posts, :inverse_of => :user
+
+  accepts_nested_attributes_for :posts, :reject_if => :all_blank
 
   def password
     @password ||= BCrypt::Password.new(password_digest)

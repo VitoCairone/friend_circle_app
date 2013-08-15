@@ -6,6 +6,12 @@
 	<label for="user_password">Password</label>
 	<input type="password" name="user[password]" id="user_password">
 	<br>
+
+	<hr>
+	<h1>Make Your First Post</h1>
+	<%= render "posts/form" %>
+	<hr>
+
 	<input type="submit" value="Sign Up">
-	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+	<!-- <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>"> -->
 </form>
