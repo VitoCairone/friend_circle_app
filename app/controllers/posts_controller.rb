@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
 
-  before_filter :enforce_logged_in, :only => :create
+  before_filter :enforce_logged_in, :only => [:new, :create]
 
   def new
     @post = Post.new
-    @friend_circles = FriendCircle.all
+    @friend_circles = current_user.friend_circles
     render :new
   end
 
@@ -14,6 +14,7 @@ class PostsController < ApplicationController
     if @post.save
       circles = params[:shares]
       circles.each do |circle|
+        next if circle == ""
         PostShare.create!(friend_circle_id: circle, post_id: @post.id)
       end
       redirect_to @post
@@ -29,7 +30,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    @friend_circles = FriendCircle.all
+    @friend_circles = current_user.friend_circles
     render :edit
   end
 

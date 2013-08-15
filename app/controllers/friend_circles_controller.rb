@@ -7,7 +7,7 @@ class FriendCirclesController < ApplicationController
   end
 
   def index
-    @friend_circles = FriendCircle.all
+    @friend_circles = current_user.friend_circles
     render :index
   end
 

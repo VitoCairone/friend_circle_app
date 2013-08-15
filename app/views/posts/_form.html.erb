@@ -1,7 +1,7 @@
 <%
 if @incepted
-  prefix = "user[posts_attributes]"
-  shares_prefix = "user[posts_attributes][shares]"
+  prefix = "user[posts_attributes][0]"
+  shares_prefix = "shares" # "user[posts_attributes][shares]"
 else
   prefix = "post"
 	shares_prefix = "shares"

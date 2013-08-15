@@ -5,10 +5,17 @@ class UsersController < ApplicationController
   before_filter :enforce_logged_in, :only => :feed
 
   def create
-    debugger
+    #debugger
     @user = User.new(params[:user])
     if @user.save
       login!(@user)
+
+      circles = params[:shares]
+      circles.each do |circle|
+        next if circle == ""
+        share = PostShare.create!(friend_circle_id: circle, post_id: Post.last.id)
+      end
+
       redirect_to feed_url
     else
       render :new
@@ -24,18 +31,6 @@ class UsersController < ApplicationController
     @post = Post.new
     @friend_circles = FriendCircle.all
     render :new # not actually required
-  end
-
-  def edit
-  end
-
-  def show
-  end
-
-  def update
-  end
-
-  def destroy
   end
 
 end

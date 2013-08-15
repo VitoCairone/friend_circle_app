@@ -8,6 +8,8 @@
 		<li><%= link_to link.name, link.url %></li>
 	<% end %>
 	</ul>
+<% end %>
+<% unless @post.friend_circles.empty? %>
 	<h3>Shares</h3>
 	<ul>
 	<% @post.friend_circles.each do |fc| %>
@@ -15,3 +17,5 @@
 	<% end %>
 	</ul>
 <% end %>
+
+<%= button_to "Edit Post", edit_post_url, :method => :get %>
